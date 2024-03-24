@@ -1,22 +1,27 @@
 def solution(N, number):
-    if number == 1:
-        return 1
-    set_list = []
+    answer = -1
     
-    for cnt in range(1,9):
-        partial_set = set()
-        partial_set.add(int(str(N)*cnt))
-        for i in range(cnt-1):
-            for op1 in set_list[i]:
-                for op2 in set_list[-i-1]:
-                    partial_set.add(op1+op2)
-                    partial_set.add(op1*op2)
-                    partial_set.add(op1-op2)
+    dp = []
+    
+    for i in range(1,9):
+        # i는 N의 개수
+        all_case = set()
+        check_number = int(str(N)*i)
+        all_case.add(check_number)
+        
+        for j in range(0,i-1):
+            for op1 in dp[j]:
+                for op2 in dp[-j-1]:
+                    all_case.add(op1-op2)
+                    all_case.add(op1+op2)
+                    all_case.add(op1*op2)
                     if op2 != 0:
-                        partial_set.add(op1/op2)
-            
-        if number in partial_set:
-            return cnt
-        set_list.append(partial_set)
+                        all_case.add(op1//op2)
+        
+        if number in all_case:
+            answer = i
+            break
+        
+        dp.append(all_case)
     
-    return -1
+    return answer
