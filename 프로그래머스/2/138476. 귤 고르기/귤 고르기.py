@@ -1,22 +1,14 @@
+from collections import Counter
 def solution(k, tangerine):
-    t_count = [0 for i in range(10000001)]
-    
-    for t in tangerine:
-        t_count[t] += 1
-    
-    t_count.sort(reverse=True)
-    
-    count = 0
     answer = 0
+    count = Counter(tangerine)
     
-    while count<k:
-        max_count = t_count[answer]
-        count += max_count
+    sorted_count = count.most_common()
+    
+    for num, cnt in sorted_count:
+        k -= cnt
         answer += 1
-    
-        
-        
+        if k < 1:
+            break
     
     return answer
-
-    
