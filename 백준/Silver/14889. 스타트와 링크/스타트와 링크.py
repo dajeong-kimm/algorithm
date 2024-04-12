@@ -1,28 +1,15 @@
 import sys
-input = sys.stdin.readline
+from itertools import combinations
 
-def team(a,n):
-    global result
-    if a == N//2:
-        start,link = 0,0
-        for i in range(N):
-            for j in range(N):
-                if visited[i] and visited[j]:
-                    start += s[i][j]
-                elif not visited[i] and not visited[j]:
-                    link += s[i][j]
-        result = min(result,abs(start-link))
-        return
-    else:
-        for x in range(n,N):
-            if visited[x] == 0:
-                visited[x] = 1
-                team(a+1,x+1)
-                visited[x] = 0
+n = int(input())
+stat = [list(map(int,input().split())) for _ in range(n)]
+sum_stat = [sum(i)+sum(j) for i,j in zip(stat,zip(*stat))]
 
-N = int(input())
-s = [list(map(int,input().split())) for _ in range(N)]
-visited = [0]*N
+allstat = sum(sum_stat)//2
+
 result = float('inf')
-team(0,0)
+
+for l in combinations(sum_stat,n//2):
+    result = min(result,abs(allstat-sum(l)))
+
 print(result)
