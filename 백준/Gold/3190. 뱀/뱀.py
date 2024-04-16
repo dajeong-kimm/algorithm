@@ -18,7 +18,6 @@ time = 0
 dx = [1,0,-1,0]
 dy = [0,1,0,-1]
 x,y = 1,1
-maps[y][x] = 1
 d = 0
 snakes = deque([(1,1)])
 
@@ -32,7 +31,6 @@ while True:
         a,b = snakes.popleft()
         maps[b][a] = 0
     x,y = nx,ny
-    maps[y][x] = 1
     snakes.append((nx,ny))
     time += 1
 
