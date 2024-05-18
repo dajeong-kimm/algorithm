@@ -1,32 +1,17 @@
-# from base64 import b64decode
+decode = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/'
+decode_list = list(decode)
 t = int(input())
-decode = ['A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z',
-      'a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z',
-      '0','1','2','3','4','5','6','7','8','9','+','/'
-      ]
 for test_case in range(1,t+1):
-    word = input()
-    length = len(word)
-
-    res = ''
-
-    for q in range(length):
-        num = decode.index(word[q])
-
-        bin_num = str(bin(num)[2:])
-
-        while len(bin_num)<6:
-            bin_num = '0'+bin_num
-
-        res += bin_num
-
-    r = ''
-    for w in range(length*6//8):
-        e = int(res[w*8:w*8+8],2)
-
-        r += chr(e)
-
-    print(f"#{test_case} {r}")
-
-# s = "Life itself is a quotation."
-# print(len(s))
+    test = list(input())
+    test_str = ''
+    for t in test:
+        t_num = decode_list.index(t)
+        tmp = str(bin(t_num)[2:])
+        while len(tmp)<6:
+            tmp = '0'+tmp
+        test_str += tmp
+    answer = ''
+    for i in range(len(test)*6//8):
+        tmp_num = int(test_str[i*8:i*8+8],2)
+        answer += chr(tmp_num)
+    print(f"#{test_case} {answer}")
