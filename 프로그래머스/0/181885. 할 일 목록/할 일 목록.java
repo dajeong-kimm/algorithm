@@ -1,9 +1,17 @@
-import java.util.stream.IntStream;
 class Solution {
     public String[] solution(String[] todo_list, boolean[] finished) {
-        return IntStream.range(0,finished.length)
-            .filter(i-> !finished[i])
-            .mapToObj(i->todo_list[i])
-            .toArray(String[]::new);
+        String[] answer = {};
+        String[] temp = new String[todo_list.length];
+        int count = 0;
+        for (int i=0;i<todo_list.length;i++){
+            if (!finished[i]) {
+                temp[count++] = todo_list[i]; 
+            }
+        }
+        answer = new String[count];
+        for (int i=0;i<count;i++){
+            answer[i] = temp[i];
+        }
+        return answer;
     }
 }
