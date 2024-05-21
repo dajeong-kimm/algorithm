@@ -1,6 +1,6 @@
 # [level 0] 대문자로 바꾸기 - 181877 
 
-[문제 링크](https://school.programmers.co.kr/learn/courses/30/lessons/181877?language=java) 
+[문제 링크](https://school.programmers.co.kr/learn/courses/30/lessons/181877) 
 
 ### 성능 요약
 
@@ -16,7 +16,7 @@
 
 ### 제출 일자
 
-2024년 05월 07일 19:38:19
+2024년 05월 21일 23:28:46
 
 ### 문제 설명
 
