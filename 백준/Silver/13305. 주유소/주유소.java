@@ -12,19 +12,19 @@ public class Main {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         int N = Integer.parseInt(br.readLine());
         StringTokenizer st = new StringTokenizer(br.readLine());
-        int[] road = new int[N-1];
+        long[] road = new long[N-1];
         for (int i=0;i<N-1;i++){
-            road[i] = Integer.parseInt(st.nextToken());
+            road[i] = Long.parseLong(st.nextToken());
         }
 
         st = new StringTokenizer(br.readLine());
-        int[] cost = new int[N];
+        long[] cost = new long[N];
         for (int i=0;i<N;i++){
-            cost[i] = Integer.parseInt(st.nextToken());
+            cost[i] = Long.parseLong(st.nextToken());
         }
 
-        int answer = 0;
-        int min_Price = cost[0];
+        long answer = 0;
+        long min_Price = cost[0];
 
         for (int i=0;i<N-1;i++){
             if (min_Price>cost[i]) {
