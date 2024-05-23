@@ -24,22 +24,13 @@ public class Main {
         }
 
         int answer = 0;
+        int min_Price = cost[0];
 
         for (int i=0;i<N-1;i++){
-            int min_cost = Integer.MAX_VALUE;
-            for (int j=i;j<N-1;j++){
-                min_cost = Math.min(min_cost,cost[j]);
+            if (min_Price>cost[i]) {
+                min_Price = cost[i];
             }
-
-            if(cost[i]>min_cost) {
-                answer += cost[i]*road[i];
-            }
-            else {
-                for (int k=i;k<N-1;k++){
-                    answer += min_cost*road[k];
-                }
-                break;
-            }
+            answer += road[i]*min_Price;
         }
 
         System.out.println(answer);
