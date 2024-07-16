@@ -1,12 +1,12 @@
 class Solution {
-    public long solution(int n) {
-        long answer = 0;
-        long[] array = new long[n+1];
-        array[0] = 0;
-        array[1] = 1;
-        for (int i=2;i<=n;i++){
-            array[i] = (array[i-1]+array[i-2])%1234567;
+    public int solution(int n) {
+        int[] fibo = new int[n+1];
+        fibo[0] = 0;
+        fibo[1] = 1;
+
+        for(int i=2;i<=n;i++){
+            fibo[i] = (fibo[i-1]+fibo[i-2])%1234567;
         }
-        return array[n];
+        return fibo[n];
     }
 }
