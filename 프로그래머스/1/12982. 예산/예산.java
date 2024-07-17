@@ -1,14 +1,16 @@
-import java.util.*;
+import java.util.Arrays;
+
 class Solution {
     public int solution(int[] d, int budget) {
-        int answer = 0;
         Arrays.sort(d);
-        for (int money : d) {
-            if (budget-money>=0){
-                budget -= money;
-                answer += 1;
-            } else break;
+        int count = 0;
+        
+        for (int amount : d){
+            if (budget<amount) break;
+            
+            budget -= amount;
+            count++;
         }
-        return answer;
+        return budget >= 0 ? count : count-1;
     }
 }
