@@ -4,10 +4,9 @@ class Solution
     {
         int answer = 0;
 
-        while (a != b) {
+        for (answer = 0; a!=b ; answer++){
             a = (a+1)/2;
             b = (b+1)/2;
-            answer += 1;
         }
 
         return answer;
