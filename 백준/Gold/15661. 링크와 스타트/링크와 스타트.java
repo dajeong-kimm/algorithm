@@ -50,36 +50,27 @@ public class Main {
 		
 		answer = Integer.MAX_VALUE;
 		
-		subset(0);
-
-		System.out.println(answer);
-	}
-	private static void subset(int cnt) {
-		if (cnt == N) {
+		//1부터 2^N-1까지 모든 경우의 수를 확인
+		int fullTeam = (1<<N) - 1;
+		for (int mask = 1;mask<(1<<N)-1;mask++) {
 			int start = 0;
 			int link = 0;
-			for (int i=0;i<N-1;i++) {
+			for (int i=0;i<N;i++) {
 				for (int j=i+1;j<N;j++) {
-					if (visited[i] && visited[j]) {
+					if ((mask&(1<<i))!=0 && (mask&(1<<j))!=0) {
 						start += arr[i][j];
 						start += arr[j][i];
 					}
-					if (!visited[i] && !visited[j]) {
+					else if ((mask&(1<<i)) == 0 && (mask&(1<<j))==0) {
 						link += arr[i][j];
 						link += arr[j][i];
 					}
 				}
 			}
-//			int link = total_score - start;
 			answer = Math.min(answer, Math.abs(start-link));
-			return;
 		}
-		
-		visited[cnt] = true;
-		subset(cnt+1);
-		
-		visited[cnt] = false;
-		subset(cnt+1);
+
+		System.out.println(answer);
 	}
 	
 
