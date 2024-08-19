@@ -53,7 +53,7 @@ public class Main {
 		
 		answer = Integer.MAX_VALUE;
 		
-		for (int i=1;i<(1<<N);i++) {
+		for (int i=1;i<(1<<N)-1;i++) {
 			a_list = new ArrayList<>();
 			b_list = new ArrayList<>();
 			for (int j=0;j<N;j++) {
@@ -65,9 +65,9 @@ public class Main {
 			}
 			
 			 // 최소 하나의 원소를 가져야 한다는 조건 확인
-		    if (a_list.isEmpty() || b_list.isEmpty()) {
-		        continue; // 이 경우는 무시하고 다음 경우로 넘어감
-		    }
+//		    if (a_list.isEmpty() || b_list.isEmpty()) {
+//		        continue; // 이 경우는 무시하고 다음 경우로 넘어감
+//		    }
 		    
 			if (is_connected()) {
 				int a = get_total(a_list);
