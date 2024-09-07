@@ -46,7 +46,7 @@ public class Main {
 	}
 	public static int countConnected(int state) {
 		visited = new boolean[5][5];
-		int cnt = 0;
+//		int cnt = 0;
 		
 		for (int i=0;i<5*5;i++) {
 			if ((state & (1<<i)) != 0) {
@@ -55,7 +55,7 @@ public class Main {
 				return dfs(x,y,state);
 			}
 		}
-		return cnt;
+		return 0;
 	}
 	public static int dfs(int x, int y, int state) {
 		visited[x][y] = true;
