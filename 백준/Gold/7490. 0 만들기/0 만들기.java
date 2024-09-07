@@ -43,46 +43,47 @@ public class Main {
     }
 
     public static String calculate() {
-        StringBuilder expression = new StringBuilder();
-        expression.append(1);  // 첫 번째 숫자는 무조건 1로 시작
-
-        for (int i = 0; i < N - 1; i++) {
-            expression.append(arr[i]).append(i + 2);  // 숫자와 연산자 추가
-        }
-
-        String result = expression.toString().replace(" ", "");  // 공백 제거
-        int answer = eval(result);
-
-        if (answer == 0) {
-            return expression.toString();
-        }
-        return null;
+    	StringBuilder exp = new StringBuilder();
+    	exp.append(1);
+    	for (int i=0;i<N-1;i++) {
+    		exp.append(arr[i]).append(i+2);
+    	}
+    	
+    	String result = exp.toString().replace(" ", "");
+    	
+    	int answer = eval(result);
+    	
+    	if (answer == 0) {
+    		return exp.toString();
+    	}
+    	return null;
     }
-
-    // 문자열 수식계산
-    public static int eval(String expression) {
-        int sum = 0;
-        int num = 0;
-        int sign = 1;  // 양수는 1, 음수는 -1
-
-        for (int i = 0; i < expression.length(); i++) {
-            char ch = expression.charAt(i);
-
-            if (Character.isDigit(ch)) {
-                num = num * 10 + (ch - '0');  // 숫자 형성
-            } else {
-                sum += sign * num;  // 이전 숫자까지 더하거나 뺀다
-                num = 0;  // 다음 숫자를 처리하기 위해 초기화
-
-                if (ch == '+') {
-                    sign = 1;  // 양수
-                } else if (ch == '-') {
-                    sign = -1;  // 음수
-                }
-            }
-        }
-        sum += sign * num;  // 마지막 숫자 더하기
-
-        return sum;
+    
+    public static int eval(String result) {
+    	int sum = 0;
+    	int num = 0;
+    	int sign = 1;
+    	
+    	for (int i=0;i<result.length();i++) {
+    		char ch  = result.charAt(i);
+    		//숫자면
+    		if (ch>='0' && ch<='9') {
+    			num = num * 10 + (ch-'0');
+    		}
+    		//연산자면 
+    		else {
+    			sum += (num*sign);
+    			num = 0;
+    			
+    			if (ch == '+') {
+    				sign = 1;
+    			} else if (ch == '-') {
+    				sign = -1;
+    			}
+    		}
+    	}
+    	sum += sign*num;
+    	
+    	return sum;
     }
 }
