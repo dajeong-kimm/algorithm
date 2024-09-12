@@ -42,7 +42,7 @@ public class Main {
 		
 		int answer = 0;
 		//물건을 한개만 살때
-		if (arr[1] == C || arr[N] == C) {
+		if (set.contains(C)) {
 			System.out.println(1);
 			return;
 		}
@@ -51,15 +51,18 @@ public class Main {
 			int start = 1;
 			int end = N;
 			while (start<end) {
+				//두가지 물건 선택
 				int w = arr[start]+arr[end];
+				//두가지 물건이 이미 C보다 크면 
 				if (w > C) end--;
+				//두가지 물건이 C보다 작으면
 				else if (w < C) {
 					if (set.contains(C-w) && (C-w) != arr[start] && (C-w) != arr[end]) {
-//						System.out.println("set.contains"+(C-w));
 						answer = 1;
 						break;
 					}
 					else start++;
+				//두가지 물건의 합이 C와 같으면
 				}else if (w == C) {
 					answer = 1;
 					break;
