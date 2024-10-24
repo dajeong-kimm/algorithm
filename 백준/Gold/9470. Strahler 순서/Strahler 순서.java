@@ -79,7 +79,7 @@ public class Main {
 				}
 			}
 //			System.out.println(Arrays.toString(maxOrder));
-			System.out.println(K+" "+maxOrder[M]);
+			System.out.println(t+" "+maxOrder[M]);
 //			sb.append(K).append(" ").append(maxOrder[M]).append("\n");
 			
 		}
