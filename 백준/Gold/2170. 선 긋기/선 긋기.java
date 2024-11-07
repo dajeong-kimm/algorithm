@@ -1,82 +1,65 @@
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.Arrays;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import java.util.StringTokenizer;
 
-/**
- * 선 긋기
- * 
- * 그려진 선들의 총 길이를 구하는 프로그램
- * 선이 여러 번 그려진 곳은 한번씩만 계산
- * @author KOREA
- *
- */
 public class Main {
-	static int N;
-	static Node[] nodeArr;
-	
-	static class Node implements Comparable<Node> {
+	static class Line implements Comparable<Line>{
 		int start;
 		int end;
 		
-		Node(int start, int end){
+		Line(int start, int end){
 			this.start = start;
 			this.end = end;
 		}
 		
 		@Override
-		public int compareTo(Node o) {
+		public int compareTo(Line o) {
 			return Integer.compare(start, o.start);
 		}
 	}
 
 	public static void main(String[] args) throws NumberFormatException, IOException {
+		// TODO Auto-generated method stub
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		StringTokenizer st;
 		
-		N = Integer.parseInt(br.readLine());
-		
-		nodeArr = new Node[N];
+		int N = Integer.parseInt(br.readLine());
+		List<Line> list = new ArrayList<>();
 		for (int i=0;i<N;i++) {
 			st = new StringTokenizer(br.readLine());
 			int start = Integer.parseInt(st.nextToken());
 			int end = Integer.parseInt(st.nextToken());
-			
-			nodeArr[i] = new Node(start,end);
+			list.add(new Line(start,end));
 		}
 		
-		Arrays.sort(nodeArr);
-		
+		Collections.sort(list);
+		int min = Integer.MAX_VALUE;
+		int max = Integer.MIN_VALUE;
 		int answer = 0;
-		int start = Integer.MIN_VALUE;
-		int end = Integer.MIN_VALUE ;
-		
 		for (int i=0;i<N;i++) {
-			Node cur = nodeArr[i];
+			Line cur = list.get(i);
 			
-			//이미 그려진 선분 내 포함
-			if (cur.end <= end && cur.start >= start) {
-				
+			//새로 긋기
+			if (cur.start >= max) {
+				answer += (cur.end - cur.start);
+				min = cur.start;
+				max = cur.end;
 			}
 			
-			//선분 연장
-			else if (cur.start <= end && cur.end > end) {
-				end = cur.end;
-			}
-			
-			//새출발
-			else if (cur.start > end) {
-				answer += (end-start);
-				start = cur.start;
-				end = cur.end;
-				
+			//중간에 삐져나가지 않고 긋기
+			else if (min <= cur.start && max >= cur.end) {
 				
 			}
-			
-			
+			//중간에 삐져나가서 긋기
+			else {
+				answer += (cur.end - max);
+				max = cur.end;
+			}
 		}
-		answer += (end-start);
 		System.out.println(answer);
 	}
 
