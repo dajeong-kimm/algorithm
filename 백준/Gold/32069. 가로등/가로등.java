@@ -24,11 +24,11 @@ public class Main {
 		K = Integer.parseInt(st.nextToken());
 		
 		//모든 가로등의 위치 큐에 넣기 (시작위치)
-		Queue<Integer> q = new ArrayDeque<>();
-		HashSet<Integer> visited = new HashSet<>();
+		Queue<Long> q = new ArrayDeque<>();
+		HashSet<Long> visited = new HashSet<>();
 		st = new StringTokenizer(br.readLine());
 		for (int i=0;i<N;i++) {
-			int x = Integer.parseInt(st.nextToken());
+			long x = Long.parseLong(st.nextToken());
 			q.add(x);
 			visited.add(x);
 		}
@@ -53,11 +53,11 @@ public class Main {
 			distance++;
 			int qSize = q.size();
 			for (int i=0;i<qSize;i++) {
-				int cur = q.poll();
+				long cur = q.poll();
 				
 				//-1아니면 +1 가기
 				for (int d : dist) {
-					int newX = cur + d;
+					long newX = cur + d;
 					
 					if (newX < 0 || newX >L) continue;
 					
