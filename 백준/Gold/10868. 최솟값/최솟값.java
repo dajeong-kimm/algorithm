@@ -3,18 +3,10 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.StringTokenizer;
 
-/**
- * 최솟값
- * N개의 정수들(1<=N<=100_000)이 있을때
- * a번째 정수부터 b번째 정수까지 중에서 제일 작은 정수를 찾는 것
- * 
- * @author KOREA
- *
- */
 public class Main {
 	static int N,M;
 	static int[] arr;
-	static int[] minTree;
+	static int[] tree;
 
 	public static void main(String[] args) throws IOException {
 		// TODO Auto-generated method stub
@@ -25,41 +17,45 @@ public class Main {
 		N = Integer.parseInt(st.nextToken());
 		M = Integer.parseInt(st.nextToken());
 		
-		arr = new int[N+1];
-		for (int i=1;i<=N;i++) {
+		int h = (int) Math.ceil(Math.log(N) / Math.log(2));
+		int treeSize = (1<<(h+1));
+		tree = new int[treeSize];
+		
+		arr = new int[N];
+		for (int i=0;i<N;i++) {
 			arr[i] = Integer.parseInt(br.readLine());
 		}
 		
-		minTree = new int[N*4];
-		init(1,N,1);
+		init(1,0,N-1);
 		
+		StringBuilder sb = new StringBuilder();
 		for (int i=0;i<M;i++) {
 			st = new StringTokenizer(br.readLine());
-			int a = Integer.parseInt(st.nextToken());
-			int b = Integer.parseInt(st.nextToken());
+			int a = Integer.parseInt(st.nextToken())-1;
+			int b = Integer.parseInt(st.nextToken())-1;
 			
-			System.out.println(minFind(1,N,1,a,b));
+			sb.append(query(1,0,N-1,a,b)).append("\n");
 		}
-
+		System.out.println(sb);
 	}
-	public static int init(int start, int end, int node) {
-		if (start == end) {
-			return minTree[node] = arr[start];
+	static int query(int node, int start, int end, int left, int right) {
+		if (left > end || right < start) return Integer.MAX_VALUE;
+		
+		if (left <= start && right >= end) {
+			return tree[node];
 		}
 		
 		int mid = (start+end)/2;
-		return minTree[node] = Math.min(init(start,mid,node*2), init(mid+1, end, node*2+1));
+		return Math.min(query(node*2, start, mid, left, right), query(node*2+1, mid+1, end, left, right));
 	}
 	
-	public static int minFind(int start, int end, int idx, int left, int right) {
-		if (right<start || end < left) return Integer.MAX_VALUE;
-		
-		if (left<=start && right>=end){
-			return minTree[idx];
+	static int init(int node, int start, int end) {
+		if (start == end) {
+			return tree[node] = arr[start];
 		}
 		
 		int mid = (start+end)/2;
-		return Math.min(minFind(start,mid,idx*2,left,right), minFind(mid+1, end, idx*2+1, left,right));
+		return tree[node] = Math.min(init(node*2, start, mid),init(node*2+1, mid+1, end));
 	}
 
 }
