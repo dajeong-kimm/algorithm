@@ -3,14 +3,6 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.StringTokenizer;
 
-/**
- * 최솟값과 최댓값
- * 
- * a번째 정수부터 b번째 정수까지 중에서 제일 작은 정수, 또는 제일 큰 정수를 찾는 일
- * 
- * @author KOREA
- *
- */
 public class Main {
 	static int N,M;
 	static int[] arr;
@@ -21,76 +13,78 @@ public class Main {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		StringTokenizer st;
 		
-		StringBuilder sb = new StringBuilder();
-		
 		st = new StringTokenizer(br.readLine());
 		N = Integer.parseInt(st.nextToken());
 		M = Integer.parseInt(st.nextToken());
 		
-		arr = new int[N+1];
-		for (int i=1;i<=N;i++) {
+		arr = new int[N];
+		for (int i=0;i<N;i++) {
 			arr[i] = Integer.parseInt(br.readLine());
 		}
 		
-		minTree = new int[N*4];
-		maxTree = new int[N*4];
+		int h = (int) Math.ceil(Math.log(N) / Math.log(2));
+		int treeSize = (1<<(h+1));
+		minTree = new int[treeSize];
+		maxTree = new int[treeSize];
 		
-		minInit(1,N,1);
-		maxInit(1,N,1);
+		initMin(1,0,N-1);
+		initMax(1,0,N-1);
 		
+		StringBuilder sb = new StringBuilder();
 		for (int i=0;i<M;i++) {
 			st = new StringTokenizer(br.readLine());
+			int a = Integer.parseInt(st.nextToken())-1;
+			int b = Integer.parseInt(st.nextToken())-1;
 			
-			int left = Integer.parseInt(st.nextToken());
-			int right = Integer.parseInt(st.nextToken());
+			int minVal = queryMin(1,0,N-1,a,b);
+			int maxVal = queryMax(1,0,N-1,a,b);
 			
-			sb.append(minFind(1, N, 1, left, right)+" "+maxFind(1,N,1,left,right)+"\n");
+			sb.append(minVal).append(" ").append(maxVal).append("\n");
 		}
 		System.out.println(sb);
+		
 	}
-	
-	public static int minInit(int start, int end, int node) {
+	static int initMin(int node, int start, int end) {
 		if (start == end) {
 			return minTree[node] = arr[start];
 		}
+		
 		int mid = (start+end)/2;
-		return minTree[node] = Math.min(minInit(start, mid, node*2), minInit(mid+1, end, node*2+1));
+		return minTree[node] = Math.min(initMin(node*2,start,mid), initMin(node*2+1,mid+1,end));
+		
 	}
-	
-	public static int maxInit(int start, int end, int node) {
+	static int initMax(int node, int start, int end) {
 		if (start == end) {
 			return maxTree[node] = arr[start];
 		}
 		
 		int mid = (start+end)/2;
-		return maxTree[node] = Math.max(maxInit(start, mid, node*2), maxInit(mid+1, end, node*2+1));
+		return maxTree[node] = Math.max(initMax(node*2,start,mid), initMax(node*2+1,mid+1,end));
+		
 	}
 	
-	public static int minFind(int start, int end, int node, int left, int right) {
-		if (right < start || end < left) {
-			return Integer.MAX_VALUE;
-		}
+	static int queryMin(int node, int start, int end, int left, int right) {
+		if (right < start || left > end) return Integer.MAX_VALUE;
 		
-		if (left <= start && end <=right) {
+		if (left <= start && right >= end) {
 			return minTree[node];
 		}
 		
 		int mid = (start+end)/2;
-		return Math.min(minFind(start, mid, node*2, left, right), minFind(mid+1, end, node*2+1, left, right));
+		return Math.min(queryMin(node*2, start, mid, left, right), queryMin(node*2+1, mid+1, end, left, right));
 	}
 	
-	public static int maxFind(int start, int end, int node, int left, int right) {
-		if (right < start || end < left) {
+	static int queryMax(int node, int start, int end, int left, int right) {
+		if (left > end || right < start) {
 			return Integer.MIN_VALUE;
 		}
 		
-		if (left <= start && end <= right) {
+		if (left <= start && right >= end) {
 			return maxTree[node];
 		}
 		
 		int mid = (start+end)/2;
-		return Math.max(maxFind(start, mid, node*2, left, right), maxFind(mid+1, end, node*2+1, left, right));
+		return Math.max(queryMax(node*2, start, mid, left, right), queryMax(node*2+1, mid+1, end, left, right));
 	}
-	
 
 }
