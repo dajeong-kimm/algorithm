@@ -1,48 +1,77 @@
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.Arrays;
+import java.util.HashMap;
 
-/**
- * 전화번호 목록
- * 
- * 전화번호 목록이 일관성을 유지하려면, 
- * 한 번호가 다른 번호의 접두어인 경우가 없어야 한다.
- * 
- * @author KOREA
- *
- */
 public class Main {
-	static int t;
-	static int n;
+	static int t,n;
 	
 	
-
-	public static void main(String[] args) throws NumberFormatException, IOException {
-		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-		t = Integer.parseInt(br.readLine());
+	static class TrieNode {
+		HashMap<Character, TrieNode> child;
+		boolean isEnd;
 		
-		for (int T=0;T<t;T++) {
-			n = Integer.parseInt(br.readLine());
-			
-			String[] num = new String[n];
-			for (int i=0;i<n;i++) {
-				num[i] = br.readLine();
-			}
-			
-			Arrays.sort(num);
-			
-			boolean answer = true;
-			for (int i=0;i<num.length-1;i++) {
-				if (num[i+1].startsWith(num[i])) {
-					answer = false;
-					break;
+		TrieNode() {
+			child = new HashMap<>();
+			isEnd = false;
+		}
+	}
+	
+	static class Trie {
+		TrieNode root;
+		
+		Trie() {
+			root = new TrieNode();
+		}
+		
+		boolean insert(String input) {
+			TrieNode cur = root;
+			for (int i=0;i<input.length();i++) {
+				char ch = input.charAt(i);
+				
+				if (!cur.child.containsKey(ch)) {
+					cur.child.put(ch,  new TrieNode());
+				}
+				
+				cur = cur.child.get(ch);
+				
+				if (cur.isEnd) {
+					return false;
 				}
 			}
 			
-			if (answer) System.out.println("YES");
-			else System.out.println("NO");
+			if (!cur.child.isEmpty()) return false;
+			
+			cur.isEnd = true;
+			return true;
 		}
+	}
+
+	public static void main(String[] args) throws NumberFormatException, IOException {
+		// TODO Auto-generated method stub
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		t = Integer.parseInt(br.readLine());
+		
+		StringBuilder sb = new StringBuilder();
+		for (int T=0;T<t;T++) {
+			n = Integer.parseInt(br.readLine());
+			boolean flag = true;
+			
+			Trie trie = new Trie();
+			
+			for (int i=0;i<n;i++) {
+				String input = br.readLine();
+				
+				if (!trie.insert(input)) {
+					flag = false;
+				}
+				
+			}
+			if (flag) sb.append("YES").append("\n");
+			else sb.append("NO").append("\n");
+		}
+		
+		System.out.println(sb);
 	}
 
 }
