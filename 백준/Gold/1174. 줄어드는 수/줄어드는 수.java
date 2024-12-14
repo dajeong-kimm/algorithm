@@ -1,11 +1,12 @@
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.sql.Array;
 import java.util.*;
 
 public class Main {
-    static Set<Long> set = new HashSet<>();
-    static List<Long> list;
+//    static Set<Long> set = new HashSet<>();
+    static List<Long> list = new ArrayList<>();
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
@@ -15,7 +16,7 @@ public class Main {
             makeNum(i, i);
         }
 
-        list = new ArrayList<>(set);
+//        list = new ArrayList<>(set);
         Collections.sort(list);
         if (N > list.size()) {
             System.out.println(-1);
@@ -27,7 +28,7 @@ public class Main {
 
     }
     static void makeNum(int lastNum, long total) {
-        set.add(total);
+        list.add(total);
 
         for (int i=0;i<10;i++){
             if (i < lastNum) {
