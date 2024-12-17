@@ -44,8 +44,6 @@ public class Main {
 		
 		int cnt = 0;
 		Queue<Integer> q = new ArrayDeque<>();
-		boolean[] visited = new boolean[N+1];
-		visited[1] = true;
 		q.add(1);
 		
 		//출발지에 팬클럽이 있으면 무조건 만남
@@ -65,10 +63,9 @@ public class Main {
 			
 			boolean flag = false;
 			for (int next : graph[cur]) {
-				if (!visited[next] && !set.contains(next)) {
+				if (!set.contains(next)) {
 					flag = true;
 					q.add(next);
-					visited[next] = true;
 				}
 			}
 			
