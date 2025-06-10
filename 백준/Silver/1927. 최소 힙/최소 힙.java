@@ -9,6 +9,8 @@ public class Main {
 		// TODO Auto-generated method stub
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		
+		StringBuilder sb = new StringBuilder();
+		
 		PriorityQueue<Integer> pq = new PriorityQueue<>();
 		
 		int N = Integer.parseInt(br.readLine());
@@ -16,14 +18,17 @@ public class Main {
 			int num = Integer.parseInt(br.readLine());
 			if (num == 0) {
 				if (pq.isEmpty()) {
-					System.out.println(0);
+					sb.append(0);
 				} else {
-					System.out.println(pq.poll());
+					sb.append(pq.poll());
 				}
+				sb.append("\n");
 			} else {
 				pq.add(num);
 			}
 		}
+		
+		System.out.println(sb);
 
 	}
 
