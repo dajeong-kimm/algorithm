@@ -1,21 +1,28 @@
-import java.util.*;
 class Solution {
-    
+    static long MOD = 1_000_000_007;
     public int solution(int m, int n, int[][] puddles) {
-        int mod = 1_000_000_007;
-        int[][] board = new int[n+1][m+1];
-        for (int i=0;i<puddles.length;i++){
-            board[puddles[i][1]][puddles[i][0]] = -1;
+        int answer = 0;
+        boolean board[][] = new boolean[m][n];
+        for (int i=0;i<puddles.length;i++) {
+            int x = puddles[i][0];
+            int y = puddles[i][1];
+            board[x-1][y-1] = true;
         }
         
-        board[1][1] = 1;
-        for (int i=1;i<=n;i++){
-            for (int j=1;j<=m;j++){
-                if (board[i][j] == -1) continue;
-                if (board[i-1][j] > 0) board[i][j] += (board[i-1][j]%mod);
-                if (board[i][j-1] > 0) board[i][j] += (board[i][j-1]%mod);
+        long[][] dp = new long[m][n];
+        dp[0][0] = 1;
+        for (int i=0;i<m;i++){
+            for (int j=0;j<n;j++) {
+                if (board[i][j]) continue;
+                
+                if (i-1 >= 0 && !board[i-1][j]) {
+                    dp[i][j] += (dp[i-1][j]%MOD);
+                }
+                if (j-1 >= 0 && !board[i][j-1]) {
+                    dp[i][j] += (dp[i][j-1]%MOD);
+                }
             }
         }
-        return board[n][m] % mod;
+        return (int) (dp[m-1][n-1]%MOD);
     }
 }
