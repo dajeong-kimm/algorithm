@@ -8,7 +8,6 @@ class Solution {
         for (int i=0;i<N;i++) {
             int h = citations[N-1-i];
             int upper = i+1;
-            int under = (N-i);
             answer = Math.max(answer, Math.min(upper, h));
             
         }
