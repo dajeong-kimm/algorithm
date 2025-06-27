@@ -1,29 +1,34 @@
 import java.util.*;
 class Solution {
     public int[] solution(int[] progresses, int[] speeds) {
-        Queue<Integer> answer = new ArrayDeque<>();
-        
+        List<Integer> list = new ArrayList<>();
+        Queue<Integer> q = new ArrayDeque<>();
         int n = progresses.length;
-        
-        int[] daysLeft = new int[n];
-        for (int i=0;i<n;i++){
-            daysLeft[i] = (int)Math.ceil((100.0-progresses[i])/speeds[i]);
+        for (int i=0;i<n;i++) {
+            q.add((int) Math.ceil((100.0-progresses[i])/speeds[i]));
         }
         
-        int count = 0;
-        int maxDay = daysLeft[0];
-        
-        for (int i=0;i<n;i++){
-            if(daysLeft[i]<=maxDay){
-                count++;
+        int time = 0;
+        while (!q.isEmpty()) {
+            if (time < q.peek()) {
+                time = q.peek();
             }
-            else{
-                answer.add(count);
-                count = 1;
-                maxDay = daysLeft[i];
+            
+            int cnt = 0;
+            while (!q.isEmpty()) {
+                if (q.peek() <= time) {
+                    q.poll();
+                    cnt++;
+                } else break;
             }
+            list.add(cnt);
         }
-        answer.add(count);
-        return answer.stream().mapToInt(Integer::intValue).toArray();
+        
+        int[] answer = new int[list.size()];
+        for (int i=0;i<list.size();i++) {
+            answer[i] = list.get(i);
+        }
+        
+        return answer;
     }
 }
